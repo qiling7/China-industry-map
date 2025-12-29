@@ -2,7 +2,7 @@
 
 > 一个专注于展示中国特色产业集群分布的交互式 Web 地图应用。
 
-[在线预览 Project Demo](https://qiling7.github.io/industry map/)
+[在线预览 Project Demo](https://qiling7.github.io/china-industry-map/)
 
 ## 📖 项目简介
 
@@ -93,10 +93,10 @@ China-industry-map/
 
 ## 👤 作者
 
-**文实 (Wen Shi)**
+**杨栩瑗 (Yang Xvyuan)**
 
 -----
 
-*Project initiated in 2025. Powered by Coffee and Curiosity.*
+*Project initiated in 2025. Powered by Tea and Curiosity.*
 
 ```
