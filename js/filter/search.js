@@ -1,34 +1,58 @@
 import { DATA, COORDS } from '../data/index.js';
 
-// 把原始 DATA 打散成“一条产业+一个地区=一条特征”
+// 把原始 DATA 打散并按【地区】聚合
 export function buildFeatures() {
-  const features = [];
-  DATA.forEach((raw, idx) => {
+  const regionMap = new Map();
+
+  DATA.forEach((raw) => {
+    // 处理多个地区的情况 "新疆和田、新疆且末" -> ["新疆和田", "新疆且末"]
     const regions = raw.region.split(/[、，,\/]+/g).map(s => s.trim()).filter(Boolean);
+    
     regions.forEach(r => {
       const coord = COORDS[r];
-      if (!coord) return; // 坐标表里没有就跳过
-      features.push({
-        id: `${idx}-${r}`,
-        region: r,
-        industry: raw.industry,
+      if (!coord) return;
+
+      if (!regionMap.has(r)) {
+        regionMap.set(r, {
+          id: r, // ID直接用地名，保证唯一
+          region: r,
+          lng: coord[0],
+          lat: coord[1],
+          industries: []
+        });
+      }
+
+      const record = regionMap.get(r);
+      record.industries.push({
+        name: raw.industry,
         category: raw.category,
-        note: raw.note || '',
-        lng: coord[0],
-        lat: coord[1]
+        note: raw.note || ''
       });
     });
   });
-  return features;
+
+  return Array.from(regionMap.values());
 }
 
-// 过滤
 export function filterFeatures(features, { q, cat }) {
   const term = (q || '').trim();
   const re = term ? new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i') : null;
+
   return features.filter(f => {
-    if (cat && f.category !== cat) return false;
-    if (!re) return true;
-    return re.test(f.region) || re.test(f.industry) || re.test(f.note);
+    //筛选出符合条件的产业子项
+    const matchedIndustries = f.industries.filter(ind => {
+      // 如果选了分类，匹配分类
+      if (cat && ind.category !== cat) return false;
+      // 如果没搜词，只看分类匹配
+      if (!re) return true;
+      // 如果搜了词，匹配 地区名 OR 产业名 OR 备注
+      return re.test(f.region) || re.test(ind.name) || re.test(ind.note);
+    });
+
+    if (matchedIndustries.length > 0) {
+      f._displayIndustries = matchedIndustries;
+      return true;
+    }
+    return false;
   });
 }
