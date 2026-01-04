@@ -87,7 +87,7 @@ export function updateMarkersStyle(filteredIDs) {
   });
 }
 
-// 闪烁逻辑 (保持不变)
+// 闪烁逻辑
 export function highlightMarker(id) {
   const m = markerInstances.get(id);
   if (!m) return;

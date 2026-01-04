@@ -1,7 +1,7 @@
 import { render } from '../filter/render.js';
 import { highlightMarker, getMarkerLatLng } from '../map/markers.js';
 import { map } from '../map/map.js';
-import { FOCUS_ZOOM } from '../config.js';
+import { FOCUS_ZOOM, DEFAULT_VIEW } from '../config.js';
 
 const qEl = document.getElementById('q');
 const catEl = document.getElementById('cat');
@@ -16,6 +16,7 @@ export function bindPanel() {
     qEl.value = '';
     catEl.value = '';
     doSearch();
+    map.setView(DEFAULT_VIEW.center, DEFAULT_VIEW.zoom);
   });
 }
 

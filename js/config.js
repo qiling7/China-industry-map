@@ -5,15 +5,15 @@ export const ATTRIBUTION = '© OpenStreetMap Contributors';
 export const FOCUS_ZOOM = 6;
 
 export const CATEGORY_COLORS = {
-  '宝石矿产': { fill: '#0ea5e9', border: '#0369a1' }, // 亮蓝
-  '工艺雕刻': { fill: '#10b981', border: '#047857' }, // 翠绿
-  '轻工纺织': { fill: '#f59e0b', border: '#b45309' }, // 亮橙
-  '轻工制造': { fill: '#ef4444', border: '#b91c1c' }, // 大红
-  '现代制造': { fill: '#8b5cf6', border: '#6d28d9' }, // 亮紫
-  '农业花卉': { fill: '#22c55e', border: '#15803d' }  // 草绿
+  '宝石矿产': { fill: '#0ea5e9', border: '#0369a1' },
+  '工艺雕刻': { fill: '#10b981', border: '#047857' },
+  '纺织服饰': { fill: '#f59e0b', border: '#b45309' },
+  '日用百货': { fill: '#f43f5e', border: '#be123c' },
+  '电子机电': { fill: '#8b5cf6', border: '#6d28d9' },
+  '农食特产': { fill: '#84cc16', border: '#4d7c0f' }, 
+  '文体教娱': { fill: '#d946ef', border: '#a21caf' }
 };
 
-// 默认点位样式
 export const MARKER_STYLE = {
   radius: 7,          
   weight: 2,          
