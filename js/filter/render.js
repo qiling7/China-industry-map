@@ -31,8 +31,6 @@ export function render({ q, cat }) {
   statsEl.textContent = `当前显示：${filtered.length} 条记录（共 ${allFeatures.length} 条）`;
 
   // 4. 搜索时重置视野 (防止点位跑到地图外)
-  // 只有当有搜索内容，且不是初始化时(initRender也会调用render)，才重置
-  // 判断：如果 filteredIDs 数量少于总数，说明发生了筛选
   if (filtered.length < allFeatures.length) {
       map.setView(DEFAULT_VIEW.center, DEFAULT_VIEW.zoom);
   }

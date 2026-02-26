@@ -1,8 +1,14 @@
 import { CATEGORY_COLORS } from '../config.js';
 
 export function makeCard(f, term) {
-  const esc = s => s ? s.replace(/[&<>]/g, t => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[t])) : '';
-  
+  const esc = s => s ? s.replace(/[&<>"']/g, t => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#x27;'
+  }[t])) : '';
+    
   const hi = s => {
     const txt = esc(s);
     if (!term) return txt;
