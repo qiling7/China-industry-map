@@ -102,7 +102,7 @@ export function updateMarkersStyle(filteredIDs) {
       if (targetSet.has(id)) {
         if (isPie) marker.setOpacity(1);
         else {
-          marker.setStyle({ fillOpacity: 1, opacity: 1 });
+          marker.setStyle({ fillOpacity: 1, opacity: 1, weight: MARKER_STYLE.weight });
           marker.bringToFront();
         }
       } else {

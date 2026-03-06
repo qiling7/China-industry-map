@@ -30,7 +30,7 @@ export function render({ q, cat }) {
   // 3. 更新统计
   statsEl.textContent = `当前显示：${filtered.length} 条记录（共 ${allFeatures.length} 条）`;
 
-  // 4. 搜索时重置视野 (防止点位跑到地图外)
+  // 4. 搜索时重置视野
   if (filtered.length < allFeatures.length) {
       map.setView(DEFAULT_VIEW.center, DEFAULT_VIEW.zoom);
   }

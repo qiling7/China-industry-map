@@ -22,15 +22,14 @@ export function bindPanel() {
 
 /**
  * 全局定位联动函数
- * @param {string} id - 产业ID
- * @param {boolean} isFromMap - 是否是由地图点击触发的？
+ * @param {string} id
+ * @param {boolean} isFromMap
  */
 window.locateOnMap = function(id, isFromMap = false) {
   const latlng = getMarkerLatLng(id);
   
   // 1. 地图动作
   if (latlng && !isFromMap) {
-    // 只有点击卡片时，地图才飞；点击地图点时，地图不动
     const currentZoom = map.getZoom();
     const targetZoom = currentZoom >= FOCUS_ZOOM ? currentZoom : FOCUS_ZOOM;
 
@@ -41,17 +40,16 @@ window.locateOnMap = function(id, isFromMap = false) {
     });
   }
 
-  // 2. 点位动作 (无论哪边点击，点位都闪烁)
+  // 2. 点位动作
   highlightMarker(id);
 
-  // 3. 卡片动作 (高亮 + 滚动)
+  // 3. 卡片动作
   document.querySelectorAll('.card.active-card').forEach(el => el.classList.remove('active-card'));
   
   const card = document.getElementById(`card-${id}`);
   if (card) {
     card.classList.add('active-card');
     
-    // 功能：如果点击地图点，侧边栏自动滚到对应卡片
     if (isFromMap) {
       card.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }

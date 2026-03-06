@@ -1,8 +1,8 @@
-# 🗺️ 中国特色产地产业地图 (China Industry Map)
+# 🗺️ 中国特色产地产业地图 China Industry Map
 
 > “无穷的远方，无数的人们，都与我有关。”
 
-[在线预览 Project Demo](https://qiling7.github.io/China-industry-map/)
+[在线预览 Project Demo](http://chinaindustrymap.duckdns.org/)
 
 ## 📖 项目背景
 
@@ -16,63 +16,71 @@
 
 本项目拒绝繁杂的图表堆砌，专注于**地理位置**与**产业信息**的深度连接，提供沉浸式的探索体验：
 
-* **🔍 沉浸式搜索 (Dimming Effect)**
-    * 区别于传统的“搜索即过滤”，当你在搜索框输入关键词（如“珍珠”或“袜子”）时，地图上无关的点位不会直接消失，而是**自动变暗**退居背景。
-    * 这种设计保留了完整的地图上下文，让你在关注目标的同时，依然能感知到它在宏观版图中的位置。
+本项目摒弃繁杂的冗余图表，专注于空间坐标与产业数据的深度耦合，提供企业级的交互体验：
 
-* **🔗 丝滑的双向联动**
-    * **点地图**：侧边栏自动滚动定位到对应的产业卡片，让你不仅看到“在哪里”，还能知道“是什么”。
-    * **点卡片**：地图视角会自动平滑飞跃（FlyTo）至目标产地，并伴随呼吸灯高亮效果，宛如一次次跨越山海的注视。
+* **🔍 沉浸式动态聚光灯**
+当在控制台输入检索指令如珍珠或羊绒时，系统不会机械地抹除无关节点，而是触发全局暗化协议，令非目标节点退居背景。这种设计在突出核心数据的同时，完整保留了宏观版图的物理上下文。
+* **🔗 双向无缝数据联动**
+触发地图坐标：侧边栏视图将以毫秒级响应，自动锚定并呈现对应的产业详情卡片。
+触控信息卡片：前端引擎会调用平滑飞跃算法，将视角瞬间推拉至目标地理坐标，并伴随呼吸灯高亮标定，实现所见即所得的极速检索。
+* **🎨 工业级极简视觉**
+用户界面采用纯白数据面板设计。剥离一切干扰信息读取的冗余滤镜，以最高对比度确保产业数据的绝对清晰，营造冷静、专业的统筹环境。
 
-* **🎨 现代通透视觉**
-    * 界面采用**雾化悬浮 (Backdrop Blur)** 设计语言。半透明的侧边栏悬浮于地图之上，既保证了信息的清晰度，又不会遮挡地图的完整性，营造出轻盈、现代的浏览体验。
+## 🛠️ 全栈架构与技术实现
 
-## 🛠️ 技术实现
+为确保系统的高可用性与可长效维护性，本项目采用了前后端物理分离的微服务架构：
 
-为了保证项目的轻量化与可维护性，本项目坚持**零依赖**的开发原则：
-
-* **架构**：原生 **Vanilla JavaScript** (ES6 Modules)，无 Webpack/Vite 打包，开箱即用。
-* **地图引擎**：基于轻量级的 [Leaflet.js](https://leafletjs.com/)。
-* **样式**：原生 CSS3 (Flexbox / Grid / Backdrop-filter)。
-* **数据源**：OpenStreetMap (瓦片地图)。
+* **后端逻辑引擎**：基于 Python 语言构建核心路由，提供稳健的高频接口吞吐。
+* **数据底座**：采用 SQLite 关系型数据库，配置严密的数据迁移脚本与联合唯一防线，保障数据资产的绝对纯净。
+* **前端渲染引擎**：原生 Vanilla JavaScript 配合轻量级 Leaflet 地图引擎，实现无阻塞的丝滑渲染。
+* **部署统筹**：支持 Docker 容器化隔离部署，利用 Nginx 反向代理实现广域网流量的精准分发。
 
 ## 📂 目录结构
 
 ```text
 China-industry-map/
-├── css/
-│   └── style.css       # 样式表（定义了雾化悬浮与交互动画）
-├── js/
-│   ├── config.js       # 全局配置（产业配色、地图默认视角）
-│   ├── main.js         # 程序入口
-│   ├── data/           # 数据核心
-│   │   ├── industries.js # 产业详情（在这里读懂中国制造）
-│   │   └── coords.js   # 地理坐标字典
-│   ├── map/            # 地图逻辑
-│   │   └── markers.js  # 点位绘制与“变暗”逻辑
-│   ├── ui/             # 界面逻辑
-│   │   └── panel.js    # 侧边栏联动控制
-│   └── filter/         # 搜索核心
-│       └── search.js   # 数据清洗与匹配算法
-└── index.html          # 主页面
+├── backend/
+│   ├── app.py
+│   └── industry.db
+├── frontend/
+│   ├── css/
+│   │   └── style.css
+│   ├── js/
+│   │   ├── filter/
+│   │   │   ├── render.js
+│   │   │   └── search.js
+│   │   ├── map/
+│   │   │   ├── map.js
+│   │   │   └── markers.js
+│   │   ├── ui/
+│   │   │   ├── card.js
+│   │   │   └── panel.js
+│   │   ├── config.js
+│   │   └── main.js
+│   └── index.html
+├── database_migrations/
+│   ├── 000_initial_setup.py
+│   └── 001_add_unique_constraint.py
+├── scripts/
+│   └── import_data.py
+└── README.md
 ```
 
-## 🚀 快速开始
+## 🚀 部署与唤醒协议
 
-本项目为静态网页，无需复杂的后端环境。
+本项目具备极强的环境兼容性，可通过以下指令迅速唤醒本地测试沙盒：
 
-1.  **克隆项目**
-    ```bash
-    git clone [https://github.com/qiling7/China-industry-map.git](https://github.com/qiling7/China-industry-map.git)
-    ```
-2.  **运行**
-      * 推荐使用 VS Code 的 `Live Server` 插件打开 `index.html`。
-      * 或者使用 Python 快速启动服务：
-        ```bash
-        python -m http.server 8000
-        ```
-3.  **访问**
-    打开浏览器访问 `http://localhost:8000`。
+1. **获取工程资产**
+git clone [https://github.com/qiling7/China-industry-map.git](https://github.com/qiling7/China-industry-map.git)
+2. **唤醒数据引擎**
+切入 backend 目录，安装底层依赖并启动 Python 逻辑进程：
+pip install -r requirements.txt
+python app.py
+3. **挂载视图橱窗**
+切入 frontend 目录，通过任意轻量级服务器激活静态页面：
+python -m http.server 8080
+4. **接入系统**
+在浏览器中输入 localhost:8080 即可接管全部数据矩阵。
 
 ## ➕ 共同完善
 
@@ -85,7 +93,7 @@ China-industry-map/
 
 ## 👤 作者
 
-**杨栩瑗 (Yang Xvyuan)**
+**Yang Xvyuan**
 
 -----
 
