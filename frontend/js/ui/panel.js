@@ -20,6 +20,48 @@ export function bindPanel() {
   });
 }
 
+export function bindDrawerSearch() {
+  const drawerQ = document.getElementById('drawer-q');
+  const drawerCat = document.getElementById('drawer-cat');
+  const drawerClear = document.getElementById('drawer-clear');
+  const drawerResults = document.getElementById('drawer-results');
+  const drawerStats = document.getElementById('drawer-stats');
+
+  const doSearch = () => {
+    const q = drawerQ.value.trim();
+    const cat = drawerCat.value;
+    render({ q, cat });
+
+    // 同步桌面端搜索控件状态
+    document.getElementById('q').value = q;
+    document.getElementById('cat').value = cat;
+
+    // 将渲染输出重定向到抽屉
+    const deskResults = document.getElementById('results');
+    const deskStats = document.getElementById('stats');
+    if (drawerResults && deskResults) {
+      drawerResults.innerHTML = deskResults.innerHTML;
+    }
+    if (drawerStats && deskStats) {
+      drawerStats.textContent = deskStats.textContent;
+    }
+  };
+
+  drawerQ.addEventListener('input', doSearch);
+  drawerCat.addEventListener('change', doSearch);
+  drawerClear.addEventListener('click', () => {
+    drawerQ.value = '';
+    drawerCat.value = '';
+    doSearch();
+  });
+
+  // 初始同步（页面加载后抽屉已有渲染好的桌面结果）
+  if (drawerResults && document.getElementById('results')) {
+    drawerResults.innerHTML = document.getElementById('results').innerHTML;
+    drawerStats.textContent = document.getElementById('stats').textContent;
+  }
+}
+
 /**
  * 全局定位联动函数
  * @param {string} id
@@ -45,13 +87,18 @@ window.locateOnMap = function(id, isFromMap = false) {
 
   // 3. 卡片动作
   document.querySelectorAll('.card.active-card').forEach(el => el.classList.remove('active-card'));
-  
+
   const card = document.getElementById(`card-${id}`);
   if (card) {
     card.classList.add('active-card');
-    
+
     if (isFromMap) {
       card.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
+  }
+
+  // 手机端：卡片点击后关闭抽屉
+  if (!isFromMap && window.closeDrawer) {
+    window.closeDrawer();
   }
 };

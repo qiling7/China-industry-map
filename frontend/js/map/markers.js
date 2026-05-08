@@ -1,5 +1,6 @@
 import { map, markersLayer } from './map.js';
 import { MARKER_STYLE, CATEGORY_COLORS } from '../config.js';
+import { render } from '../filter/render.js';
 
 let markerInstances = new Map();
 
@@ -77,12 +78,31 @@ export function initMarkers(features) {
     m.bindTooltip(tooltipContent, { direction: 'top', offset: [0, -8] });
 
     m.on('click', () => {
+      // 如果正在筛选状态，重置搜索条件
+      const qEl = document.getElementById('drawer-q') || document.getElementById('q');
+      const catEl = document.getElementById('drawer-cat') || document.getElementById('cat');
+      if (qEl.value.trim() || catEl.value) {
+        qEl.value = '';
+        catEl.value = '';
+        render({ q: '', cat: '' });
+        // 同步抽屉结果
+        const drawerResults = document.getElementById('drawer-results');
+        const deskResults = document.getElementById('results');
+        if (drawerResults && deskResults) {
+          drawerResults.innerHTML = deskResults.innerHTML;
+        }
+      }
+
       highlightMarker(f.id);
       const card = document.getElementById(`card-${f.id}`);
       if (card) {
         card.scrollIntoView({ behavior: 'smooth', block: 'center' });
         document.querySelectorAll('.card.active-card').forEach(el => el.classList.remove('active-card'));
         card.classList.add('active-card');
+      }
+      // 手机端：标记点击后展开抽屉
+      if (window.openDrawer) {
+        window.openDrawer();
       }
     });
 

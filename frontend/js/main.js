@@ -1,5 +1,7 @@
 import { initRender } from './filter/render.js';
 import { bindPanel } from './ui/panel.js';
+import { initDrawer } from './ui/drawer.js';
+import { bindDrawerSearch } from './ui/panel.js';
 
 async function fetchBackendData() {
     const baseUrl = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
@@ -31,13 +33,17 @@ async function fetchBackendData() {
         });
     }
     
-    return Array.from(regionMap.values());
+    const features = Array.from(regionMap.values());
+    features.sort((a, b) => a.region.localeCompare(b.region, 'zh-CN'));
+    return features;
 }
 
 async function app() {
     const features = await fetchBackendData();
     initRender(features);
     bindPanel();
+    initDrawer();
+    bindDrawerSearch();
 }
 
 app();

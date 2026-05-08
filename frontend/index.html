@@ -11,6 +11,40 @@
   <div id="app">
     <div id="map"></div>
 
+    <!-- 手机端：抽屉把手 -->
+    <div id="drawer-handle">
+      <span class="handle-text">索引 &#9654;</span>
+    </div>
+
+    <!-- 手机端：左侧抽屉面板 -->
+    <nav id="drawer">
+      <div class="drawer-header">
+        <h3>产业集群索引</h3>
+        <button id="drawer-close" aria-label="关闭面板">&times;</button>
+      </div>
+      <div class="drawer-search">
+        <input id="drawer-q" type="search" placeholder="搜索：珍珠 / 深圳 / 袜子 ..." />
+        <div class="drawer-search-row">
+          <select id="drawer-cat">
+            <option value="">全部分类</option>
+            <option value="宝石矿产">宝石矿产</option>
+            <option value="工艺雕刻">工艺雕刻</option>
+            <option value="文体教娱">文体教娱</option>
+            <option value="纺织服饰">纺织服饰</option>
+            <option value="日用百货">日用百货</option>
+            <option value="电子机电">电子机电</option>
+            <option value="农食特产">农食特产</option>
+          </select>
+          <button id="drawer-clear">重置</button>
+        </div>
+      </div>
+      <div id="drawer-results"></div>
+      <div id="drawer-stats" class="drawer-footer"></div>
+    </nav>
+
+    <!-- 手机端：面板遮罩（面板展开时点击地图区域关闭） -->
+    <div id="drawer-backdrop"></div>
+
     <aside id="panel">
       <div class="panel-header-fixed">
         <div class="header">
